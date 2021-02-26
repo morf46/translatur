@@ -1,7 +1,7 @@
-package org.jetbrains.plugins.template.services
+package com.github.morf46.translatur.services
 
+import com.github.morf46.translatur.MyBundle
 import com.intellij.openapi.project.Project
-import org.jetbrains.plugins.template.MyBundle
 
 class MyProjectService(project: Project) {
 

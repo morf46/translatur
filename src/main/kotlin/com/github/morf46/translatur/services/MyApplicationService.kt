@@ -1,6 +1,6 @@
-package org.jetbrains.plugins.template.services
+package com.github.morf46.translatur.services
 
-import org.jetbrains.plugins.template.MyBundle
+import com.github.morf46.translatur.MyBundle
 
 class MyApplicationService {
 
