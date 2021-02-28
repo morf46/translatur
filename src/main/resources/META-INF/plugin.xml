@@ -17,20 +17,20 @@
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
     <actions>
-        <group id="org.jetbrains.plugins.template.actions.CategoryActionGroup"
-               class="org.jetbrains.plugins.template.actions.CategoryActionGroup" text="Categories"
+        <group id="com.github.morf46.translatur.actions.CategoryActionGroup"
+               class="com.github.morf46.translatur.actions.CategoryActionGroup" text="Categories"
                popup="true"
                description="Translation Categories">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </group>
 
-        <action id="org.jetbrains.plugins.template.actions.PopupCategoryAction"
-                class="org.jetbrains.plugins.template.actions.PopupCategoryAction" text="Set TRANSLATUR Category"
+        <action id="com.github.morf46.translatur.actions.PopupCategoryAction"
+                class="com.github.morf46.translatur.actions.PopupCategoryAction" text="Set TRANSLATUR Category"
                 description="Set TRANSLATUR Category">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
-        <action id="org.jetbrains.plugins.template.actions.TranslateAction"
-                class="org.jetbrains.plugins.template.actions.TranslateAction" text="TRANSLATUR"
+        <action id="com.github.morf46.translatur.actions.TranslateAction"
+                class="com.github.morf46.translatur.actions.TranslateAction" text="TRANSLATUR"
                 description="translatur">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>

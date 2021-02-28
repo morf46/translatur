@@ -1,4 +1,4 @@
-package org.jetbrains.plugins.template.actions
+package com.github.morf46.translatur.actions
 
 
 import com.github.morf46.translatur.services.MyApplicationService
@@ -55,7 +55,7 @@ class TranslateAction : AnAction() {
         val primaryCaret: Caret = editor.caretModel.primaryCaret
         val start: Int = primaryCaret.selectionStart
         val end: Int = primaryCaret.selectionEnd
-        val translationKey = "tranlation_key_" + Random.nextInt(1000, 9999)
+        var translationKey = "translation_key_" + Random.nextInt(1000, 9999)
 
         val selectionString: String = document.getText(TextRange(start, end))
         val preparedSelection: String = removeQuotes(selectionString)
@@ -75,6 +75,8 @@ class TranslateAction : AnAction() {
         )
 
         val preparedString: String = translation.translatedText.replace("&quot;", "\"")
+        val newKey = makeTranslationKey(preparedString)
+        translationKey = if (newKey.length > 3)  newKey else translationKey
 
         val returnString: String = if (psiFile.language.isKindOf(HTMLLanguage.INSTANCE)) {
             String.format("{{\"%s\" | i18n : \"%s\"}}", translationKey, applicationService.translationKey)
@@ -98,14 +100,14 @@ class TranslateAction : AnAction() {
         category: String,
         keyName: String,
         original: String,
-        translated: String
+        translated: String,
     ) {
         val file = File(sqlFile.path)
         var content = ""
 
         try {
             content = FileUtils.readFileToString(file, Charsets.UTF_8)
-        }catch (exception: FileNotFoundException){
+        } catch (exception: FileNotFoundException) {
 
         }
 
@@ -141,7 +143,7 @@ class TranslateAction : AnAction() {
         val file = File(project.basePath + "/TRBO-xxxx.sql")
         try {
             file.createNewFile()
-        }catch (exception : IOException){
+        } catch (exception: IOException) {
 
         }
         val _findFileByIoFile: @Nullable VirtualFile? =
@@ -159,5 +161,18 @@ class TranslateAction : AnAction() {
             newString = newString.substring(0, newString.length - 1)
         }
         return newString
+    }
+
+    private fun makeTranslationKey(translatedText: String): String {
+        val txt = translatedText.trim()
+        val list = txt.split(" ")
+        return list.joinToString(
+            "_",
+            "",
+            "",
+            4,
+            "",
+            null
+        )
     }
 }

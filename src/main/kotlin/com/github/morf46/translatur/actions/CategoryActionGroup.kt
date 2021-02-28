@@ -1,4 +1,4 @@
-package org.jetbrains.plugins.template.actions
+package com.github.morf46.translatur.actions
 
 import com.intellij.openapi.actionSystem.ActionGroup
 import com.intellij.openapi.actionSystem.AnAction
