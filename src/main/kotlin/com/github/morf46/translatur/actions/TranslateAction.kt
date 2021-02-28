@@ -77,7 +77,7 @@ class TranslateAction : AnAction() {
         val preparedString: String = translation.translatedText.replace("&quot;", "\"")
 
         val returnString: String = if (psiFile.language.isKindOf(HTMLLanguage.INSTANCE)) {
-            String.format("{{\"%s\"}} | i18n : \"%s\"", translationKey, applicationService.translationKey)
+            String.format("{{\"%s\" | i18n : \"%s\"}}", translationKey, applicationService.translationKey)
         } else {
             String.format("translations.%s", translationKey)
         }
