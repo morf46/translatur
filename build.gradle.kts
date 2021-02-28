@@ -31,6 +31,7 @@ repositories {
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
     implementation( "com.google.cloud:google-cloud-translate:1.95.10")
+    implementation( "commons-io:commons-io:2.8.0")
 }
 
 // Configure gradle-intellij-plugin plugin.
