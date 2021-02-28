@@ -7,4 +7,6 @@ class MyApplicationService {
     init {
         println(MyBundle.message("applicationService"))
     }
+
+    public var translationKey: String = "moduleSetup"
 }
