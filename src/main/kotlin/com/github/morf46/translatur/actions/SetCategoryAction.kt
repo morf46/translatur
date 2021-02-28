@@ -1,12 +1,11 @@
 package org.jetbrains.plugins.template.actions
 
+import com.github.morf46.translatur.services.MyApplicationService
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 import com.intellij.openapi.util.NlsActions
 import org.jetbrains.annotations.Nullable
-import org.jetbrains.plugins.template.dialog.ModuleKeyDialog
-import org.jetbrains.plugins.template.services.MyApplicationService
 
 class SetCategoryAction(text: @Nullable @NlsActions.ActionText String?) : AnAction(text) {
 

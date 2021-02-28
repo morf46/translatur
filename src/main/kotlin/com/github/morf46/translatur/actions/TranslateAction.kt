@@ -1,12 +1,11 @@
 package org.jetbrains.plugins.template.actions
 
 
+import com.github.morf46.translatur.services.MyApplicationService
 import com.google.auth.oauth2.ServiceAccountCredentials
 import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateOptions
 import com.google.cloud.translate.Translation
-import com.intellij.json.JsonLanguage
-import com.intellij.lang.Language
 import com.intellij.lang.html.HTMLLanguage
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -22,16 +21,12 @@ import com.intellij.openapi.project.guessProjectDir
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.impl.file.PsiDirectoryFactory
 import org.apache.commons.io.FileUtils
 import org.jetbrains.annotations.Nullable
-import org.jetbrains.plugins.template.dialog.ModuleKeyDialog
-import org.jetbrains.plugins.template.services.MyApplicationService
 import java.io.File
-
-
-import com.intellij.psi.PsiFile
 import java.io.FileNotFoundException
 import java.io.IOException
 import kotlin.random.Random
@@ -39,14 +34,14 @@ import kotlin.random.Random
 
 class TranslateAction : AnAction() {
     override fun update(event: AnActionEvent) {
-        val currentProject: @Nullable Project? = event.project;
-        val editor: @Nullable Editor? = event.getData(CommonDataKeys.EDITOR);
+        val currentProject: @Nullable Project? = event.project
+        val editor: @Nullable Editor? = event.getData(CommonDataKeys.EDITOR)
 
         val bShow = currentProject != null
                 && editor != null
-                && editor.selectionModel.hasSelection();
+                && editor.selectionModel.hasSelection()
 
-        event.presentation.isEnabledAndVisible = bShow;
+        event.presentation.isEnabledAndVisible = bShow
 
     }
 
@@ -60,9 +55,9 @@ class TranslateAction : AnAction() {
         val primaryCaret: Caret = editor.caretModel.primaryCaret
         val start: Int = primaryCaret.selectionStart
         val end: Int = primaryCaret.selectionEnd
-        var translationKey = "tranlation_key_" + Random.nextInt(1000, 9999)
+        val translationKey = "tranlation_key_" + Random.nextInt(1000, 9999)
 
-        val selectionString: String = document.getText(TextRange(start, end));
+        val selectionString: String = document.getText(TextRange(start, end))
         val preparedSelection: String = removeQuotes(selectionString)
 
         val sqlFile: @Nullable VirtualFile = getOrCreateFile(project)
@@ -77,16 +72,14 @@ class TranslateAction : AnAction() {
             preparedSelection,
             Translate.TranslateOption.sourceLanguage("de"),
             Translate.TranslateOption.targetLanguage("en")
-        );
+        )
 
-        val preparedString: String = translation.translatedText.replace("&quot;", "\"");
-        var returnString = ""
+        val preparedString: String = translation.translatedText.replace("&quot;", "\"")
 
-        if (psiFile.language.isKindOf(HTMLLanguage.INSTANCE)) {
-            returnString =
-                String.format("{{\"%s\"}} | i18n : \"%s\"", translationKey, applicationService.translationKey)
+        val returnString: String = if (psiFile.language.isKindOf(HTMLLanguage.INSTANCE)) {
+            String.format("{{\"%s\"}} | i18n : \"%s\"", translationKey, applicationService.translationKey)
         } else {
-            returnString = String.format("translations.%s", translationKey)
+            String.format("translations.%s", translationKey)
         }
 
         WriteCommandAction.runWriteCommandAction(
@@ -94,9 +87,7 @@ class TranslateAction : AnAction() {
         ) { document.replaceString(start, end, returnString) }
 
 
-        if (sqlFile != null) {
-            writeToSqlFile(sqlFile, applicationService.translationKey, translationKey, preparedSelection, preparedString)
-        }
+        writeToSqlFile(sqlFile, applicationService.translationKey, translationKey, preparedSelection, preparedString)
 
         primaryCaret.removeSelection()
     }
@@ -110,7 +101,7 @@ class TranslateAction : AnAction() {
         translated: String
     ) {
         val file = File(sqlFile.path)
-        var content: String = ""
+        var content = ""
 
         try {
             content = FileUtils.readFileToString(file, Charsets.UTF_8)
@@ -142,7 +133,7 @@ class TranslateAction : AnAction() {
         }
 
         val createFileFromText =
-            PsiFileFactory.getInstance(project).createFileFromText("TRBO-xxxx.sql", PlainTextLanguage.INSTANCE, "");
+            PsiFileFactory.getInstance(project).createFileFromText("TRBO-xxxx.sql", PlainTextLanguage.INSTANCE, "")
         val guessProjectDir = project.guessProjectDir()
 
         PsiDirectoryFactory.getInstance(project).createDirectory(guessProjectDir!!).add(createFileFromText)
@@ -162,10 +153,10 @@ class TranslateAction : AnAction() {
     private fun removeQuotes(selectionString: String): String {
         var newString: String = selectionString.trim()
         if (newString.startsWith("\"")) {
-            newString = newString.substring(1, newString.length);
+            newString = newString.substring(1, newString.length)
         }
         if (newString.endsWith("\"")) {
-            newString = newString.substring(0, newString.length - 1);
+            newString = newString.substring(0, newString.length - 1)
         }
         return newString
     }

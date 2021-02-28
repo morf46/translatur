@@ -1,13 +1,11 @@
 package org.jetbrains.plugins.template.dialog
 
+import com.github.morf46.translatur.services.MyApplicationService
 import com.intellij.openapi.components.service
-import java.awt.BorderLayout
-import java.awt.Dimension
-import javax.swing.JLabel
-import javax.swing.JPanel
-import javax.swing.JComponent
 import com.intellij.openapi.ui.DialogWrapper
-import org.jetbrains.plugins.template.services.MyApplicationService
+import java.awt.BorderLayout
+import javax.swing.JComponent
+import javax.swing.JPanel
 import javax.swing.JTextField
 
 
@@ -15,7 +13,7 @@ class ModuleKeyDialog : DialogWrapper(true) {
 
     var txt:JTextField = JTextField("")
 
-    override fun createCenterPanel(): JComponent? {
+    override fun createCenterPanel(): JComponent {
         val applicationService = service<MyApplicationService>()
         val dialogPanel = JPanel(BorderLayout())
         txt = JTextField(applicationService.translationKey)
