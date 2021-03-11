@@ -30,7 +30,7 @@ repositories {
 }
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
-    implementation( "com.google.cloud:google-cloud-translate:1.95.10")
+    implementation( "com.google.cloud:google-cloud-translate:1.96.0")
     implementation( "commons-io:commons-io:2.8.0")
 }
 
