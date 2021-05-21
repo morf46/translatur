@@ -29,7 +29,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
     implementation( "com.google.cloud:google-cloud-translate:1.95.10")
     implementation( "commons-io:commons-io:2.8.0")
 }
