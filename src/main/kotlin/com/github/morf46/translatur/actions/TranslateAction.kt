@@ -90,7 +90,8 @@ class TranslateAction : AnAction() {
         translationKey = if (newKey.length > 3)  newKey else translationKey
 
         val returnString: String = if (psiFile.language.isKindOf(HTMLLanguage.INSTANCE)) {
-            String.format("{{\"%s\" | i18n : \"%s\"}}", translationKey, applicationService.translationKey)
+            //String.format("{{\"%s\" | i18n : \"%s\"}}", translationKey, applicationService.translationKey)
+            String.format("{{translations.%s}}", translationKey)
         } else {
             String.format("translations.%s", translationKey)
         }
