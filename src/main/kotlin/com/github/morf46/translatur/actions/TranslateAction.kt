@@ -158,12 +158,12 @@ class TranslateAction : AnAction() {
         }
 
         val baseString: String =
-            "category, phrase, translation_de, translation_en\n";
+            "category, phrase, translation_de, translation_en,dump\n";
         if (content.trim() == "") {
             content = baseString
         }
 
-        content += String.format("%s, %s, %s, %s\n", category, keyName, original, translated)
+        content += String.format("%s, %s, %s, %s,%s\n", category, keyName, original, translated)
 
         FileUtils.write(file, content, Charsets.UTF_8)
     }
